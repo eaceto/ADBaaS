@@ -2,7 +2,7 @@
 layout: default
 ---
 
-A small service that talks to Android ADB and Emulator using a HTTP API
+A small service that talks to Android ADB and Emulator using a HTTP API. Written in Java using Spring Boot.
 
 # API documentation
 

@@ -8,13 +8,18 @@
         <version>2.2.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>dev.eaceto.mobile.tools.android.adb.api</groupId>
     <artifactId>adbaas</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
+    <packaging>jar</packaging>
+
     <name>ADBaaS</name>
     <description>ADB as a Service</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
     </properties>
 
@@ -59,8 +64,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <mainClass>dev.eaceto.mobile.tools.android.adb.api.AdBaaSApplication</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+
 
 </project>

@@ -2,6 +2,7 @@ package dev.eaceto.mobile.tools.android.adb.api.service;
 
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.Application;
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.Device;
+import dev.eaceto.mobile.tools.android.adb.api.model.adb.PermissionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -113,5 +114,37 @@ public class AndroidSDKService {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         p.getInputStream().transferTo(baos);
         return baos.toByteArray();
+    }
+
+    public PermissionStatus grantPermission(String deviceId, String packageName, String permission) throws Exception {
+        String args = "-s " + deviceId + " shell pm grant " + packageName + " " + permission;
+        Process p = executeProcess(adb, args);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.contains("device") && line.contains("not found")) throw new Exception("device not found: " + deviceId);
+            if (line.contains("Unknown permission")) throw new IllegalArgumentException("Unknown permission: " + permission);
+            if (line.contains("Unknown package")) throw new IllegalArgumentException("Unknown package: " + packageName);
+            if (line.contains("exception")) throw new Exception("Unknown exception");
+        }
+        br.close();
+        return new PermissionStatus("granted");
+    }
+
+    public PermissionStatus revokePermission(String deviceId, String packageName, String permission) throws Exception {
+        String args = "-s " + deviceId + " shell pm revoke " + packageName + " " + permission;
+        Process p = executeProcess(adb, args);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.contains("device") && line.contains("not found")) throw new Exception("device not found: " + deviceId);
+            if (line.contains("Unknown permission")) throw new IllegalArgumentException("Unknown permission: " + permission);
+            if (line.contains("Unknown package")) throw new IllegalArgumentException("Unknown package: " + packageName);
+            if (line.contains("exception")) throw new Exception("Unknown exception");
+        }
+        br.close();
+        return new PermissionStatus("revoked");
     }
 }

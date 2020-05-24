@@ -399,6 +399,20 @@
 				},
 				{
 					"name": "Is app installed?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1342977d-0070-491c-911c-e0ebca6ae0c4",
+								"exec": [
+									"var data = JSON.parse(responseBody);   ",
+									"postman.setEnvironmentVariable(\"packageName\", data.packageName);",
+									"postman.setEnvironmentVariable(\"permission\", android.permission.READ_CALENDAR);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -627,6 +641,231 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "App Permissions",
+					"item": [
+						{
+							"name": "Grant permissions",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}/permission/{{permission}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"{{packageName}}",
+										"permission",
+										"{{permission}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Grant permissions",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}/permission/{{permission}}",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"device",
+												"{{deviceId}}",
+												"application",
+												"{{packageName}}",
+												"permission",
+												"{{permission}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Content-Disposition",
+											"value": "inline;filename=f.txt"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 24 May 2020 20:59:58 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"granted\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Revoke permissions",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}/permission/{{permission}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"{{packageName}}",
+										"permission",
+										"{{permission}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Revoke permissions",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}/permission/{{permission}}",
+											"host": [
+												"{{baseURL}}"
+											],
+											"path": [
+												"device",
+												"{{deviceId}}",
+												"application",
+												"{{packageName}}",
+												"permission",
+												"{{permission}}"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": "",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Content-Disposition",
+											"value": "inline;filename=f.txt"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 24 May 2020 21:04:02 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"revoked\"\n}"
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}

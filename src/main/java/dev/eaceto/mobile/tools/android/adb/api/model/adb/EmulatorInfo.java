@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmulatorInfo {
-    private String serialNumber;
-    private long processId;
+    private final String serialNumber;
+    private final long processId;
 
     public EmulatorInfo(String serialNumber, long processId) {
         this.serialNumber = serialNumber;

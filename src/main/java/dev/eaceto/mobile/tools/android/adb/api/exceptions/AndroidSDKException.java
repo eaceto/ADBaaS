@@ -1,8 +1,8 @@
 package dev.eaceto.mobile.tools.android.adb.api.exceptions;
 
 public class AndroidSDKException extends Exception {
-    private String uuid;
-    private Exception baseException;
+    private final String uuid;
+    private final Exception baseException;
 
     public AndroidSDKException(String uuid, Exception exception) {
         this.uuid = uuid;

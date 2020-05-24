@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Application {
-    private String packageName;
+    private final String packageName;
     private String versionCode;
 
     private Application(String packageName) {

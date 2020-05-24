@@ -7,8 +7,8 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Device {
-    private String serialNumber;
-    private String status;
+    private final String serialNumber;
+    private final String status;
     private String usb;
     private String product;
     private String model;
@@ -28,7 +28,7 @@ public class Device {
         String serialNumber = parts.get(0).trim();
         String status = parts.get(1).trim();
 
-        if (serialNumber.isBlank() || status.isBlank()) return  null;
+        if (serialNumber.isBlank() || status.isBlank()) return null;
 
         Device device = new Device(serialNumber, status);
         if (parts.size() > 2) {

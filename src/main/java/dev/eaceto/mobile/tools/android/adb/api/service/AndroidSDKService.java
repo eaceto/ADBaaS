@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AndroidSDKService {
@@ -20,9 +21,9 @@ public class AndroidSDKService {
     @Autowired
     private Environment env;
 
-    private String adb = "/platform-tools/adb";
-    private String emulator = "/emulator/emulator";
-    private String emulatorCheck = "/emulator/emulator-check";
+    private final String adb = "/platform-tools/adb";
+    private final String emulator = "/emulator/emulator";
+    private final String emulatorCheck = "/emulator/emulator-check";
 
     public String getAndroidHomePath() {
         return env.getProperty("ANDROID_HOME");
@@ -123,8 +124,10 @@ public class AndroidSDKService {
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while ((line = br.readLine()) != null) {
-            if (line.contains("device") && line.contains("not found")) throw new Exception("device not found: " + deviceId);
-            if (line.contains("Unknown permission")) throw new IllegalArgumentException("Unknown permission: " + permission);
+            if (line.contains("device") && line.contains("not found"))
+                throw new Exception("device not found: " + deviceId);
+            if (line.contains("Unknown permission"))
+                throw new IllegalArgumentException("Unknown permission: " + permission);
             if (line.contains("Unknown package")) throw new IllegalArgumentException("Unknown package: " + packageName);
             if (line.contains("exception")) throw new Exception("Unknown exception");
         }
@@ -139,12 +142,64 @@ public class AndroidSDKService {
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while ((line = br.readLine()) != null) {
-            if (line.contains("device") && line.contains("not found")) throw new Exception("device not found: " + deviceId);
-            if (line.contains("Unknown permission")) throw new IllegalArgumentException("Unknown permission: " + permission);
+            if (line.contains("device") && line.contains("not found"))
+                throw new Exception("device not found: " + deviceId);
+            if (line.contains("Unknown permission"))
+                throw new IllegalArgumentException("Unknown permission: " + permission);
             if (line.contains("Unknown package")) throw new IllegalArgumentException("Unknown package: " + packageName);
             if (line.contains("exception")) throw new Exception("Unknown exception");
         }
         br.close();
         return new PermissionStatus("revoked");
+    }
+
+    public Application installApplication(String deviceId, String packageName, String filePath) throws Exception {
+        String args = "-s " + deviceId + " install -r -t -i " + packageName + " " + filePath;
+        Process p = executeProcess(adb, args);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        boolean installed = false;
+
+        while ((line = br.readLine()) != null) {
+            if (line.contains("adb:")) {
+                throw new Exception(line.replace("adb:", ""));
+            }
+            if ("Success".equals(line)) {
+                installed = true;
+                break;
+            }
+        }
+        br.close();
+
+        if (!installed) throw new Exception("Could not install application");
+
+        List<Application> apps = getApplications(deviceId, true);
+        List<Application> filtered = apps.stream().filter(application -> packageName.equals(application.getPackageName())).collect(Collectors.toList());
+        if (filtered.isEmpty()) throw new Exception("Application not found");
+        if (filtered.size() != 1) throw new Exception("Internal service error");
+        return filtered.get(0);
+    }
+
+    public void deleteApplication(String deviceId, String packageName, boolean keepData) throws Exception{
+        String args = "-s " + deviceId + " shell cmd package uninstall " + (keepData? "-k": "") + " " + packageName;
+        Process p = executeProcess(adb, args);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        boolean uninstalled = false;
+
+        while ((line = br.readLine()) != null) {
+            if (line.contains("adb:")) {
+                throw new Exception(line.replace("adb:", ""));
+            }
+            if ("Success".equals(line)) {
+                uninstalled = true;
+                break;
+            }
+        }
+        br.close();
+
+        if (!uninstalled) throw new Exception("Could not uninstall application");
     }
 }

@@ -1,7 +1,7 @@
 package dev.eaceto.mobile.tools.android.adb.api.model.adb;
 
 public class PermissionStatus {
-    private String status;
+    private final String status;
 
     public PermissionStatus(String status) {
         this.status = status;

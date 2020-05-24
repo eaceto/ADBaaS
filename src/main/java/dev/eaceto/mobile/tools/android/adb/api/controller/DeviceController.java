@@ -1,18 +1,15 @@
 package dev.eaceto.mobile.tools.android.adb.api.controller;
 
-import dev.eaceto.mobile.tools.android.adb.api.model.adb.Application;
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.Device;
 import dev.eaceto.mobile.tools.android.adb.api.service.AndroidSDKService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("device")

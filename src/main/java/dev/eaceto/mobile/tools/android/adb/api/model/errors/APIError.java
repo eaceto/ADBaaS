@@ -3,9 +3,9 @@ package dev.eaceto.mobile.tools.android.adb.api.model.errors;
 import org.springframework.http.HttpStatus;
 
 public class APIError {
-    private String errorId;
-    private HttpStatus status;
-    private String message;
+    private final String errorId;
+    private final HttpStatus status;
+    private final String message;
 
     public APIError(String errorId, HttpStatus status, String message) {
         super();

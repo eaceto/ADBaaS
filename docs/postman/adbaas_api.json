@@ -405,9 +405,12 @@
 							"script": {
 								"id": "1342977d-0070-491c-911c-e0ebca6ae0c4",
 								"exec": [
+									"if (responseBody == undefined || responseBody == \"\") return;",
 									"var data = JSON.parse(responseBody);   ",
-									"postman.setEnvironmentVariable(\"packageName\", data.packageName);",
-									"postman.setEnvironmentVariable(\"permission\", android.permission.READ_CALENDAR);"
+									"if (data != undefined && data.packageName != null) {",
+									"    postman.setEnvironmentVariable(\"packageName\", data.packageName);",
+									"    postman.setEnvironmentVariable(\"permission\", \"android.permission.READ_CALENDAR\");",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -503,6 +506,338 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"packageName\": \"com.example.helloworld\",\n    \"versionCode\": \"1\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Install application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"description": "App to install",
+									"type": "file",
+									"src": "/Users/kimi/AndroidStudioProjects/MyApplication/app/build/outputs/apk/debug/app-debug.apk"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"device",
+								"{{deviceId}}",
+								"application",
+								"{{packageName}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Install app",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/Users/kimi/AndroidStudioProjects/MyApplication/app/build/outputs/apk/debug/app-debug.apk"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"{{packageName}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Disposition",
+									"value": "inline;filename=f.txt"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 May 2020 23:31:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"packageName\": \"com.example.helloworld\",\n    \"versionCode\": \"1\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Uninstall application",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"device",
+								"{{deviceId}}",
+								"application",
+								"{{packageName}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Uninstall application",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "A",
+										"type": "text",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"{{packageName}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 May 2020 23:47:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Uninstall application and keep data",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}?keepData=true",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"device",
+								"{{deviceId}}",
+								"application",
+								"{{packageName}}"
+							],
+							"query": [
+								{
+									"key": "keepData",
+									"value": "true",
+									"description": "Keep data when uninstalling app"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Uninstall application and keep data",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/{{packageName}}?keepData=true",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"{{packageName}}"
+									],
+									"query": [
+										{
+											"key": "keepData",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 24 May 2020 23:48:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
 						}
 					]
 				}

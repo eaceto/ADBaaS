@@ -25,6 +25,10 @@ Why creating a small wrapper around ADB and other Android SDK tools? Why impleme
 java -jar adbaas.jar
 ```
 
+# Changelog
+
+Visit [https://eaceto.github.io/ADBaaS/CHANGELOG.html](https://eaceto.github.io/ADBaaS/CHANGELOG.html) for a detailed list of changes in the lastest releases.
+
 # API documentation
 
 The online documentation is located at [https://eaceto.github.io/ADBaaS/api.html](https://eaceto.github.io/ADBaaS/api.html). A Postman Collection is available at [https://eaceto.github.io/ADBaaS/postman/adbaas_api.json](https://eaceto.github.io/ADBaaS/postman/adbaas_api.json)

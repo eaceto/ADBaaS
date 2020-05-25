@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 shorttitle: Changelog
 title: Changelog and Release News
 description: >

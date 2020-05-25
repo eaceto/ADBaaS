@@ -23,7 +23,7 @@ tags:
 
 These are the latest versions of `ADBaaS` which have been released. For a complete list of all releases and changes please visit {{ site.github.releases_url }}.
 
-## [{% if drafts[0].name -%}{{ drafts[0].name }}{% else %}bdelock{%- endif %} UNRELEASED]({% if drafts[0].html_url -%}{{ drafts[0].html_url }}{%- else -%}{{ site.github.repository_url }}/tree/master/{%- endif %})
+## [{% if drafts[0].name -%}{{ drafts[0].name }}{% else %}ADBaaS{%- endif %} UNRELEASED]({% if drafts[0].html_url -%}{{ drafts[0].html_url }}{%- else -%}{{ site.github.repository_url }}/tree/master/{%- endif %})
 
 Unreleased [changes in master]({{ site.github.repository_url }}/compare/{{ releases[0].tag_name }}...master#files_bucket "Compare changes in master for upcoming release") for upcoming {% if drafts[0].name -%}{{ drafts[0].name }}{%- endif %} release
 

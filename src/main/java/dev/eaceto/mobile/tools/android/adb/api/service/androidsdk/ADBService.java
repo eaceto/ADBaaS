@@ -182,4 +182,25 @@ public class ADBService {
 
         if (!uninstalled) throw new Exception("Could not uninstall application");
     }
+
+    public Long getApplicationPID(String deviceId, String packageName) throws Exception {
+        String args = "-s " + deviceId + " shell pidof -s " + packageName;
+        Process p = executeProcess(adb, args);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        String pidString = "";
+
+        while ((line = br.readLine()) != null) {
+            pidString += line.trim();
+        }
+        br.close();
+
+        pidString = pidString.trim();
+        if (!pidString.isBlank()) {
+            Long pid = Long.valueOf(pidString);
+            return pid;
+        }
+        return null;
+    }
 }

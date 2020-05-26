@@ -1,6 +1,7 @@
 package dev.eaceto.mobile.tools.android.adb.api.controller;
 
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.Application;
+import dev.eaceto.mobile.tools.android.adb.api.model.adb.ApplicationState;
 import dev.eaceto.mobile.tools.android.adb.api.service.StorageService;
 import dev.eaceto.mobile.tools.android.adb.api.service.androidsdk.ADBService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,28 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "multiple applications with the same packageName");
         }
         return new ResponseEntity(filtered.get(0), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/application/{packageName}/state", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApplicationState> isApplicationRunning(@PathVariable("deviceId") String deviceId,
+                                                                 @PathVariable("packageName") String packageName) throws Exception {
+        List<Application> apps = adbService.getApplications(deviceId, true);
+        List<Application> filtered = apps.stream().filter(application -> packageName.equals(application.getPackageName())).collect(Collectors.toList());
+        if (filtered.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else if (filtered.size() > 1) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "multiple applications with the same packageName");
+        }
+
+        ApplicationState appState = new ApplicationState(filtered.get(0));
+
+        Long pid = adbService.getApplicationPID(deviceId, packageName);
+        if (pid != null && pid >= 0) {
+            appState.setRunning(true);
+            appState.setPID(pid);
+        }
+
+        return new ResponseEntity(appState, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/application/{packageName}", method = RequestMethod.DELETE)

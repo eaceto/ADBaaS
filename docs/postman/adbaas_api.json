@@ -440,6 +440,66 @@
 					},
 					"response": [
 						{
+							"name": "application not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/com.example.helloworld2",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"com.example.helloworld2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 May 2020 02:32:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
 							"name": "Is app installed?",
 							"originalRequest": {
 								"method": "GET",
@@ -838,6 +898,244 @@
 							],
 							"cookie": [],
 							"body": null
+						}
+					]
+				},
+				{
+					"name": "Get application state",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8bbf443d-d196-4a72-bf24-f9921e717054",
+								"exec": [
+									"if (responseBody == undefined || responseBody == \"\") return;",
+									"var data = JSON.parse(responseBody);   ",
+									"if (data != undefined && data.packageName != null) {",
+									"    postman.setEnvironmentVariable(\"packageName\", data.application.packageName);",
+									"    if (data.pid != null) {",
+									"        postman.setEnvironmentVariable(\"pid\", data.pid);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/device/{{deviceId}}/application/com.example.helloworld/state",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"device",
+								"{{deviceId}}",
+								"application",
+								"com.example.helloworld",
+								"state"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Application running",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/com.example.helloworld/state",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"com.example.helloworld",
+										"state"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 May 2020 02:29:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"application\": {\n        \"packageName\": \"com.example.helloworld\",\n        \"versionCode\": \"1\"\n    },\n    \"running\": true,\n    \"pid\": 17708\n}"
+						},
+						{
+							"name": "application not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/com.example.helloworld2/state",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"com.example.helloworld2",
+										"state"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 May 2020 02:31:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "application not running",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/device/{{deviceId}}/application/com.example.helloworld/state",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"device",
+										"{{deviceId}}",
+										"application",
+										"com.example.helloworld",
+										"state"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 26 May 2020 02:31:15 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"application\": {\n        \"packageName\": \"com.example.helloworld\",\n        \"versionCode\": \"1\"\n    },\n    \"running\": false\n}"
 						}
 					]
 				}

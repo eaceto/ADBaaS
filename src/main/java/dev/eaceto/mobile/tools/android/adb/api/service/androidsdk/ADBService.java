@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class ADBService {
 
     private final String adb = "/platform-tools/adb";
+
     @Autowired
     private Environment env;
 

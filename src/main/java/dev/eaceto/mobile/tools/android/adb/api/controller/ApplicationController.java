@@ -1,8 +1,8 @@
 package dev.eaceto.mobile.tools.android.adb.api.controller;
 
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.Application;
-import dev.eaceto.mobile.tools.android.adb.api.service.AndroidSDKService;
 import dev.eaceto.mobile.tools.android.adb.api.service.StorageService;
+import dev.eaceto.mobile.tools.android.adb.api.service.androidsdk.ADBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class ApplicationController {
 
     private final StorageService storageService;
     @Autowired
-    AndroidSDKService androidSDKService;
+    ADBService adbService;
 
     @Autowired
     public ApplicationController(StorageService storageService) {
@@ -32,7 +32,7 @@ public class ApplicationController {
     public List<Application> getApplications(@PathVariable("deviceId") String deviceId,
                                              @RequestParam(name = "type", required = false) String type) throws Exception {
         boolean allApps = "all".equals(type);
-        return androidSDKService.getApplications(deviceId, allApps);
+        return adbService.getApplications(deviceId, allApps);
     }
 
     @PostMapping(value = "/application/{packageName}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,14 +49,14 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "cannot store file.");
         }
 
-        Application application = androidSDKService.installApplication(deviceId, packageName, filePath);
+        Application application = adbService.installApplication(deviceId, packageName, filePath);
         return new ResponseEntity(application, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/application/{packageName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Application> findApplication(@PathVariable("deviceId") String deviceId,
                                                        @PathVariable("packageName") String packageName) throws Exception {
-        List<Application> apps = androidSDKService.getApplications(deviceId, true);
+        List<Application> apps = adbService.getApplications(deviceId, true);
         List<Application> filtered = apps.stream().filter(application -> packageName.equals(application.getPackageName())).collect(Collectors.toList());
         if (filtered.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -71,7 +71,7 @@ public class ApplicationController {
                                   @PathVariable("packageName") String packageName,
                                   @RequestParam(name = "keepData", required = false, defaultValue = "false") boolean keepData) throws Exception {
 
-        androidSDKService.deleteApplication(deviceId, packageName, keepData);
+        adbService.deleteApplication(deviceId, packageName, keepData);
     }
 
 }

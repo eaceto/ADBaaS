@@ -1,7 +1,7 @@
 package dev.eaceto.mobile.tools.android.adb.api.controller;
 
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.PermissionStatus;
-import dev.eaceto.mobile.tools.android.adb.api.service.AndroidSDKService;
+import dev.eaceto.mobile.tools.android.adb.api.service.androidsdk.ADBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.*;
 public class SecurityController {
 
     @Autowired
-    AndroidSDKService androidSDKService;
+    ADBService adbService;
 
     @RequestMapping(value = "/{permission}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public PermissionStatus grantPermission(@PathVariable("deviceId") String deviceId,
                                             @PathVariable("packageName") String packageName,
                                             @PathVariable("permission") String permission) throws Exception {
-        return androidSDKService.grantPermission(deviceId, packageName, permission);
+        return adbService.grantPermission(deviceId, packageName, permission);
     }
 
     @RequestMapping(value = "/{permission}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public PermissionStatus revokePermission(@PathVariable("deviceId") String deviceId,
                                              @PathVariable("packageName") String packageName,
                                              @PathVariable("permission") String permission) throws Exception {
-        return androidSDKService.revokePermission(deviceId, packageName, permission);
+        return adbService.revokePermission(deviceId, packageName, permission);
     }
 
 }

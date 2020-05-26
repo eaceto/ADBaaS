@@ -1,4 +1,4 @@
-package dev.eaceto.mobile.tools.android.adb.api.model.adb;
+package dev.eaceto.mobile.tools.android.adb.api.model.emulator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

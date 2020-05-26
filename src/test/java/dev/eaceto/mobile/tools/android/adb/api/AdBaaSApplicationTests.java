@@ -1,8 +1,7 @@
 package dev.eaceto.mobile.tools.android.adb.api;
 
-import dev.eaceto.mobile.tools.android.adb.api.service.AndroidSDKService;
 import dev.eaceto.mobile.tools.android.adb.api.model.adb.Device;
-import org.junit.jupiter.api.BeforeEach;
+import dev.eaceto.mobile.tools.android.adb.api.service.androidsdk.ADBService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +16,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdBaaSApplicationTests {
 
     @Autowired
-    AndroidSDKService androidSDKServiceService;
+    ADBService adbService;
 
     @DisplayName("List ADB Devices")
     @Test
     void listDevices() {
         try {
-            File sdkDirectory = new File(androidSDKServiceService.getAndroidHomePath());
+            File sdkDirectory = new File(adbService.getAndroidHomePath());
             if (!sdkDirectory.exists()) {
                 // Avoid performing test if SDK is not available
                 assertTrue(true);
                 return;
             }
 
-            List<Device> devices = androidSDKServiceService.getConnectedDevices();
+            List<Device> devices = adbService.getConnectedDevices();
             assertTrue(!devices.isEmpty());
         } catch (Exception e) {
             e.printStackTrace();

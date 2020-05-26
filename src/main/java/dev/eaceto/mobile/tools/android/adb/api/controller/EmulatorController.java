@@ -1,7 +1,7 @@
 package dev.eaceto.mobile.tools.android.adb.api.controller;
 
 
-import dev.eaceto.mobile.tools.android.adb.api.service.AndroidSDKService;
+import dev.eaceto.mobile.tools.android.adb.api.service.androidsdk.EmulatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,11 +17,11 @@ import java.util.List;
 public class EmulatorController {
 
     @Autowired
-    AndroidSDKService androidSDKService;
+    EmulatorService emulatorService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<String> getAvailableEmulators() throws Exception {
-        return androidSDKService.getEmulators();
+        return emulatorService.getEmulators();
     }
 
 }

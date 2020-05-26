@@ -34,4 +34,11 @@ java -Dserver.port=9090 -jar adbaas.jar
 
 ## Documentation 
 
-You can find online documentation at [https://eaceto.github.io/ADBaaS/index.html](https://eaceto.github.io/ADBaaS/index.html). There is also a Postman Collection that can be found at the */docs/postman* folder in the repository. 
+### API Doc: 
+
+* You can find online documentation at [https://eaceto.github.io/ADBaaS/index.html](https://eaceto.github.io/ADBaaS/index.html). There is also a Postman Collection that can be found at the */docs/postman* folder in the repository.
+* Postman API collection: [https://eaceto.github.io/ADBaaS/postman/adbaas_api.json](https://eaceto.github.io/ADBaaS/postman/adbaas_api.json) 
+
+### External references
+
+* Generating certificates for localhost [https://letsencrypt.org/docs/certificates-for-localhost/](https://letsencrypt.org/docs/certificates-for-localhost/)

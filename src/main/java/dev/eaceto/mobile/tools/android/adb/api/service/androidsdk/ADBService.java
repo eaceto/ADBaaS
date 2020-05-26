@@ -18,10 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class ADBService {
 
+    private final String adb = "/platform-tools/adb";
     @Autowired
     private Environment env;
-
-    private final String adb = "/platform-tools/adb";
 
     public String getAndroidHomePath() {
         return env.getProperty("ANDROID_HOME");
@@ -121,6 +120,7 @@ public class ADBService {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
+
         while ((line = br.readLine()) != null) {
             if (line.contains("device") && line.contains("not found"))
                 throw new Exception("device not found: " + deviceId);
@@ -138,8 +138,8 @@ public class ADBService {
         Process p = executeProcess(adb, args);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
         boolean installed = false;
+        String line;
 
         while ((line = br.readLine()) != null) {
             if (line.contains("adb:")) {
@@ -161,13 +161,13 @@ public class ADBService {
         return filtered.get(0);
     }
 
-    public void deleteApplication(String deviceId, String packageName, boolean keepData) throws Exception{
-        String args = "-s " + deviceId + " shell cmd package uninstall " + (keepData? "-k": "") + " " + packageName;
+    public void deleteApplication(String deviceId, String packageName, boolean keepData) throws Exception {
+        String args = "-s " + deviceId + " shell cmd package uninstall " + (keepData ? "-k" : "") + " " + packageName;
         Process p = executeProcess(adb, args);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
         boolean uninstalled = false;
+        String line;
 
         while ((line = br.readLine()) != null) {
             if (line.contains("adb:")) {
@@ -188,18 +188,17 @@ public class ADBService {
         Process p = executeProcess(adb, args);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        StringBuilder pidStrBuilder = new StringBuilder();
         String line;
-        String pidString = "";
 
         while ((line = br.readLine()) != null) {
-            pidString += line.trim();
+            pidStrBuilder.append(line.trim());
         }
         br.close();
 
-        pidString = pidString.trim();
+        String pidString = pidStrBuilder.toString();
         if (!pidString.isBlank()) {
-            Long pid = Long.valueOf(pidString);
-            return pid;
+            return Long.valueOf(pidString);
         }
         return null;
     }

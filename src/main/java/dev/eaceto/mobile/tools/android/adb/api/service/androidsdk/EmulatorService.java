@@ -1,27 +1,20 @@
 package dev.eaceto.mobile.tools.android.adb.api.service.androidsdk;
 
-import dev.eaceto.mobile.tools.android.adb.api.model.adb.Application;
-import dev.eaceto.mobile.tools.android.adb.api.model.adb.Device;
-import dev.eaceto.mobile.tools.android.adb.api.model.adb.PermissionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmulatorService {
 
+    private final String emulator = "/emulator/emulator";
     @Autowired
     private Environment env;
-
-    private final String emulator = "/emulator/emulator";
 
     public String getAndroidHomePath() {
         return env.getProperty("ANDROID_HOME");

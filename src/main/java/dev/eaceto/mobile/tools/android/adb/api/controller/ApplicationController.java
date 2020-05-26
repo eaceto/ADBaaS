@@ -38,8 +38,8 @@ public class ApplicationController {
 
     @PostMapping(value = "/application/{packageName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Application> installApplication(@PathVariable("deviceId") String deviceId,
-                                          @PathVariable("packageName") String packageName,
-                                          @RequestParam("file") MultipartFile file) throws Exception {
+                                                          @PathVariable("packageName") String packageName,
+                                                          @RequestParam("file") MultipartFile file) throws Exception {
 
         if (file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "file is empty.");

@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApplicationState {
     private final Application application;
-    private boolean running;
+    private String state;
     private Long pid;
 
     public ApplicationState(Application application) {
         this.application = application;
-        this.running = false;
+        this.state = "unknown";
         this.pid = null;
     }
 
@@ -18,12 +18,12 @@ public class ApplicationState {
         return application;
     }
 
-    public boolean isRunning() {
-        return running;
+    public String getState() {
+        return state;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public Long getPID() {

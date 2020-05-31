@@ -82,8 +82,10 @@ public class ApplicationController {
 
         Long pid = adbService.getApplicationPID(deviceId, packageName);
         if (pid != null && pid >= 0) {
-            appState.setRunning(true);
+            appState.setState("running");
             appState.setPID(pid);
+        } else {
+            appState.setState("stopped");
         }
 
         return new ResponseEntity(appState, HttpStatus.OK);

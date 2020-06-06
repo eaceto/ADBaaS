@@ -37,7 +37,7 @@ java -Dserver.port=9090 -jar adbaas.jar
 ### API Doc: 
 
 * You can find online documentation at [https://eaceto.github.io/ADBaaS/index.html](https://eaceto.github.io/ADBaaS/index.html). There is also a Postman Collection that can be found at the */docs/postman* folder in the repository.
-* Postman API collection: [https://eaceto.github.io/ADBaaS/postman/adbaas_api.json](https://eaceto.github.io/ADBaaS/postman/adbaas_api.json) 
+* OpenAPI 3.0.0 Spec: [https://eaceto.github.io/ADBaaS/openapi/openapi.yaml](https://eaceto.github.io/ADBaaS/openapi/openapi.yaml) 
 
 ### External references
 

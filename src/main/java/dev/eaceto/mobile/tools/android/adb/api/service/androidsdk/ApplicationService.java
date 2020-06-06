@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -140,8 +141,20 @@ public class ApplicationService extends ADBService{
         return new ApplicationState(ApplicationState.State.STOPPED);
     }
 
-    public List<ApplicationComponent> getApplicationComponents(String deviceId, String packageName) {
+    public List<ApplicationComponent> getApplicationComponents(String deviceId, String packageName) throws Exception {
         ArrayList<ApplicationComponent> components = new ArrayList<>();
+
+        Process p = executeProcess(adb, "-s " + deviceId + " shell dumpsys package | grep -Eo \"^[[:space:]]+[0-9a-f]+[[:space:]]+" + packageName + "/[^[:space:]]+\" | grep -oE \"[^[:space:]]+$\"");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = Arrays.stream(line.split("/")).filter(s -> !s.isBlank()).toArray(String[]::new);
+            if (parts.length < 2) continue;
+
+            components.add(new ApplicationComponent(parts[0], parts[1]));
+        }
+        br.close();
 
         return components;
     }

@@ -3,11 +3,14 @@ package dev.eaceto.mobile.tools.android.adb.api.model.adb;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.HashMap;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Application {
     private final String packageName;
     private String versionCode;
+    private ApplicationState state;
+    private List<ApplicationComponent> components;
 
     private Application(String packageName) {
         if (packageName == null) throw new NullPointerException("package cannot be null");
@@ -38,5 +41,21 @@ public class Application {
 
     public String getVersionCode() {
         return versionCode;
+    }
+
+    public ApplicationState getState() {
+        return state;
+    }
+
+    public void setState(ApplicationState state) {
+        this.state = state;
+    }
+
+    public List<ApplicationComponent> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<ApplicationComponent> components) {
+        this.components = components;
     }
 }

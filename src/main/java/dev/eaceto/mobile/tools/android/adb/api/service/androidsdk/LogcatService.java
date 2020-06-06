@@ -1,9 +1,11 @@
 package dev.eaceto.mobile.tools.android.adb.api.service.androidsdk;
 
+import dev.eaceto.mobile.tools.android.adb.api.exceptions.ApplicationNotFoundException;
+import dev.eaceto.mobile.tools.android.adb.api.exceptions.ApplicationNotRunningException;
+import dev.eaceto.mobile.tools.android.adb.api.model.adb.Application;
 import dev.eaceto.mobile.tools.android.adb.api.model.logcat.LogcatMessage;
 import dev.eaceto.mobile.tools.android.adb.api.model.logcat.LogcatSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -19,34 +21,30 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 @Service
-public class LogcatService {
+public class LogcatService extends ADBService {
 
-
-    private final String adb = "/platform-tools/adb";
     private final String EVENTNAME_START = "start";
     private final String EVENTNAME_END = "end";
     private final String EVENTNAME_LOG = "log";
     private final String EVENTNAME_WAITING_FOR_DEVICE = "waiting_device";
-    @Autowired
-    private Environment env;
     private final HashMap<String, String> activeSessions = new HashMap<>(); //key: Device + PackageName / Value: SessionId
     private final HashMap<String, ArrayList<SseEmitter>> registeredEmitters = new HashMap<>(); //key: SessionId / Value: List of subscribers
     private final HashMap<String, ExecutorService> activeExecutors = new HashMap<>(); //key: SessionId / Value: ExecutorService
 
-    public String getAndroidHomePath() {
-        return env.getProperty("ANDROID_HOME");
-    }
+    @Autowired
+    ApplicationService applicationService;
 
-    private String getCommand(String executable, String arguments) {
-        return getAndroidHomePath() + executable + " " + arguments;
-    }
+    public SseEmitter createEmitter(String deviceId, String packageName) throws Exception {
+        Application application = applicationService.getApplication(deviceId, packageName, false);
+        if (application == null) {
+            throw new ApplicationNotFoundException(deviceId, packageName);
+        }
 
+        Long pid = applicationService.getApplicationPID(deviceId, packageName);
+        if (pid == null || pid <= 0) {
+            throw new ApplicationNotRunningException(deviceId, packageName);
+        }
 
-    private Process executeProcess(String executable, String arguments) throws Exception {
-        return Runtime.getRuntime().exec(getCommand(executable, arguments));
-    }
-
-    public SseEmitter createEmitter(String deviceId, String packageName, Long pid) throws Exception {
         LogcatSession logcatSession = createLogcatSession(deviceId, packageName, pid);
 
         SseEmitter emitter = new SseEmitter();

@@ -1,7 +1,7 @@
 package dev.eaceto.mobile.tools.android.adb.api.controller;
 
 import dev.eaceto.mobile.tools.android.adb.api.helpers.ExceptionHelper;
-import dev.eaceto.mobile.tools.android.adb.api.model.errors.APIError;
+import dev.eaceto.mobile.tools.android.adb.api.model.errors.Error;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ public class APIExceptionHandler {
     Logger logger = LoggerFactory.getLogger(APIExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<APIError> handleException(Exception ex) {
+    public ResponseEntity<Error> handleException(Exception ex) {
         String errorId = exceptionHelper.trackException(ex);
         logger.error("Error Id: " + errorId, ex);
         HttpStatus statusError = HttpStatus.INTERNAL_SERVER_ERROR;
-        APIError apiError = new APIError(errorId, statusError, ex.getLocalizedMessage());
+        Error apiError = new Error(errorId, statusError, ex.getLocalizedMessage());
         return new ResponseEntity<>(apiError, statusError);
     }
 

@@ -1,29 +1,33 @@
 package dev.eaceto.mobile.tools.android.adb.api.model.adb;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.lang.NonNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApplicationState {
-    private final Application application;
-    private boolean running;
+
+    private State state;
     private Long pid;
 
-    public ApplicationState(Application application) {
-        this.application = application;
-        this.running = false;
-        this.pid = null;
+    public ApplicationState() {
+        this(State.UNINSTALLED);
     }
 
-    public Application getApplication() {
-        return application;
+    public ApplicationState(State state) {
+        this(state, null);
     }
 
-    public boolean isRunning() {
-        return running;
+    public ApplicationState(State state, Long pid) {
+        this.state = state;
+        this.pid = pid;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public Long getPID() {
@@ -32,5 +36,25 @@ public class ApplicationState {
 
     public void setPID(Long pid) {
         this.pid = pid;
+    }
+
+    public enum State {
+        UNINSTALLED("uninstalled"),
+        RUNNING("running"),
+        STOPPED("stopped");
+
+        private final String name;
+
+        State(@NonNull String name) {
+            this.name = name;
+        }
+
+        public boolean equalsName(String otherName) {
+            return name.equals(otherName);
+        }
+
+        public String toString() {
+            return this.name;
+        }
     }
 }

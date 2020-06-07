@@ -31,7 +31,7 @@ Visit [https://eaceto.github.io/ADBaaS/CHANGELOG.html](https://eaceto.github.io/
 
 # API documentation
 
-The online documentation is located at [https://eaceto.github.io/ADBaaS/api.html](https://eaceto.github.io/ADBaaS/api.html). A Postman Collection is available at [https://eaceto.github.io/ADBaaS/postman/adbaas_api.json](https://eaceto.github.io/ADBaaS/postman/adbaas_api.json)
+The online documentation is located at [https://eaceto.github.io/ADBaaS/swagger/index.html](https://eaceto.github.io/ADBaaS/swagger/index.html). The OpenAPI 3.0.0 spec is available at [https://eaceto.github.io/ADBaaS/openapi/openapi.yaml](https://eaceto.github.io/ADBaaS/openapi/openapi.yaml)
 
 # Support or Contact
 

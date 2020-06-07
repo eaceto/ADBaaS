@@ -24,11 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(new APIKeyAuthenticationManager(allowedAPIKeys));
 
         http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().addFilter(filter)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilter(filter)
                 .authorizeRequests()
+                .antMatchers("/actuator/**").permitAll()
                 .anyRequest()
                 .authenticated();
+
     }
 
 }

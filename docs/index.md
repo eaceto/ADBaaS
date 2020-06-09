@@ -25,6 +25,10 @@ Why creating a small wrapper around ADB and other Android SDK tools? Why impleme
 java -jar adbaas.jar
 ```
 
+# Usage
+
+Visit [https://eaceto.github.io/ADBaaS/usage.html](https://eaceto.github.io/ADBaaS/usage.html) for information about how to use this service.
+
 # Changelog
 
 Visit [https://eaceto.github.io/ADBaaS/CHANGELOG.html](https://eaceto.github.io/ADBaaS/CHANGELOG.html) for a detailed list of changes in the lastest releases.

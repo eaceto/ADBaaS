@@ -22,7 +22,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <springfox.version>2.9.2</springfox.version>
-        <orgjson.version>20200518</orgjson.version>
+        <orgjson.version>20230227</orgjson.version>
     </properties>
 
     <dependencies>
